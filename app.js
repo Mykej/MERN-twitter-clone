@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
-const express = require('express');//This helps create a new express server.
-const app = express(); //this helps creates a new express server.
 const db = require('./config/keys').mongoURI; //import key/connection string
+const express = require('express');//This helps create a new express server.
+
+const app = express(); //this helps creates a new express server.
 
 //connect to MongoDB using mongoose:
-mongoose.connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-});
+mongoose
+    .connect(db, 
+        { 
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+    .then(() => console.log("Connected to MongoDB successfully"))
+    .catch(err => console.log(err));
 
 //setup basic route so that we can render some information on our page. 
 app.get("/", (req, res) => res.send("Hello World!!!"));
